@@ -1,6 +1,11 @@
-.center {
+div {
   width: 800px;
   align-content: center;
   text-align: center;
   margin: 0 auto;
+  border: 1px solid black;
+}
+
+ul {
+  list-style-position: inside;
 }

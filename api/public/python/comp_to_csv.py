@@ -60,7 +60,7 @@ for key in lifters:
         k.extend(lifter)
         all.append(k)
 
-filename = '%s.csv' % compname
+filename = 'public/meets/%s.csv' % compname
 
 with open(filename, 'w', newline = '') as f:
     writer = csv.writer(f)

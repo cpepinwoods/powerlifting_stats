@@ -1,10 +1,11 @@
 var express = require("express");
 const { spawn } = require('child_process');
+var fs = require('fs');
 
 var router = express.Router();
 
 function runPython(path, args) {
-    const pyProg = spawn('python', [path].concat(args));
+    const pyProg = spawn('python', [path, ...args]);
     return new Promise((resolve, reject) => {
         pyProg.stdout.on('data', function(data) {
             resolve(data.toString());
@@ -15,8 +16,8 @@ function runPython(path, args) {
     });
 }
 
-async function callPython(meet){
-    result = await runPython('public/python/test.py', [meet]);
+async function callPython(path, args){
+    result = await runPython(path, args);
     console.log(result);
     return result;
 }
@@ -26,7 +27,16 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/stats_return", async function(req, res, next) {
-    res.send(await callPython(req.query.meet));
+    res.send(await callPython('public/python/stats.py', [req.query.meet]));
+});
+
+router.get("/get_meets", function(req, res, next) {
+    var files = fs.readdirSync('public/meets/');
+    var meets = [];
+    files.forEach(file => {
+        meets.push(file);
+    });
+    res.send(meets);
 });
 
 module.exports = router;
