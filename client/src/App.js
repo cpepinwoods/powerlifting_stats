@@ -1,22 +1,28 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import Hist from './components/Hist.js';
 
 function App() {  
   const [state, setState] = useState({ apiResponse: "" });
   const [meets, setMeets] = useState([""]);
 
-  const callAPI = async () => {
+  const getNewMeet = async () => {
     const meet = document.getElementById("meet").value;
-    console.log(meet)
-    await fetch("http://localhost:9000/stats/stats_return?meet=" + meet)
+    await fetch("http://localhost:9000/stats/get_new_meet?meet=" + meet)
       .then(res => res.text())
-      .then(res => setState({ apiResponse: res }));
+      .then(res => alert(res))
+      .then(() => getMeets());
   }
 
+  // Gets the stats of the specified meet on button click
   const getMeetStats = async (meet) => {
     await fetch("http://localhost:9000/stats/stats_return?meet=" + meet)
-      .then(res => res.text())
-      .then(res => setState({ apiResponse: res }));
+      .then(res => {
+        res.text();
+        console.log(res);
+      })
+      .then(res => setState({ apiResponse: res }))
+      .then(() => console.log(state));
   }
 
   const getMeets = async () => {
@@ -27,6 +33,7 @@ function App() {
       .then(res => setMeets(res));
   }
 
+  // Get meets use effect
   useEffect(() => {
     getMeets();
   }, []);
@@ -50,14 +57,14 @@ function App() {
       <div>
         <h1>Enter Meet URL</h1>
         <input type="text" id="meet" />
-        <button onClick={callAPI}>Get Meet Data</button>
+        <button onClick={getNewMeet}>Get Meet Data</button>
       </div>
       <div>
         <h1>Meets Currently Listed</h1>
         {renderMeets()}
       </div>
       <div>
-        <p>{state.apiResponse}</p>
+        <Hist data={{state}} id={"viz"}></Hist>
       </div>
     </>
   );

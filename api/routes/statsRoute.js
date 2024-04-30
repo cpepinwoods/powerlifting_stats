@@ -17,9 +17,7 @@ function runPython(path, args) {
 }
 
 async function callPython(path, args){
-    result = await runPython(path, args);
-    console.log(result);
-    return result;
+    return await runPython(path, args);
 }
 
 router.get("/", function(req, res, next) {
@@ -37,6 +35,10 @@ router.get("/get_meets", function(req, res, next) {
         meets.push(file);
     });
     res.send(meets);
+});
+
+router.get("/get_new_meet", async function(req, res, next) {
+    res.send(await callPython('public/python/comp_to_csv.py', [req.query.meet]));
 });
 
 module.exports = router;
