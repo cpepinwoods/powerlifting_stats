@@ -30,8 +30,8 @@ except Exception as error:
 df.columns = ['Division', 'Weight Class', 'Place', 'Name', 'Birth_Year', 'Team', 'State', 'Lot Number', 
             'Body Weight', 'Squat1', 'Squat2', 'Squat3', 'Bench1', 'Bench2', 'Bench3', 'Deadlift1', 'Deadlift2', 'Deadlift3',
             'Total', 'Dots', 'Bench Dots']
-dots = df['Dots'].to_numpy()
-dots = np.histogram(dots, bins=100)
+dots = df['Total'].to_numpy()
+dots = np.histogram(dots, bins=50)
 freq = dots[0]
 vals = dots[1]
 out = {"freq": list(freq), "vals": list(vals)}
