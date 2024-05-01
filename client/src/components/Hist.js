@@ -22,7 +22,7 @@ function Hist({freq, vals, id, width, height}) {
     const x_offset = width * 0.05;
     let count = freq.length;
     const y_scale = graph_height / max;
-    const x_scale = Math.floor(graph_width / count);
+    const x_scale = graph_width / count;
     const graph = freq.map((val, index) => {
         return (<g>
             <rect x={x_offset + index*x_scale} y={graph_height - val*y_scale} width={x_scale - 1} height={val*y_scale} fill="black"></rect>
@@ -35,7 +35,9 @@ function Hist({freq, vals, id, width, height}) {
     const sum = freq.reduce((a, b) => a + b, 0);
     const xScale = d3.scaleLinear().domain([0, Math.max(...vals)]).range([x_offset, x_offset + graph_width]);
     const yScale = d3.scaleLinear().domain([0, max/sum*100]).range([graph_height, 0]);
-    const ticks = d3.range(0, Math.max(...vals), Math.floor(Math.max(...vals)/50));
+    const step = Math.max(...vals)/50;
+    const ticks = d3.range(0, Math.max(...vals) + step, step);
+    console.log(vals);
     return (
         <svg ref={id} width="100%" height="100%">
             {graph}
