@@ -76,6 +76,10 @@ function App() {
       </div>
       <div className="display" ref={graphRef}>
         <Hist freq={freq} vals={vals} id={useRef()} width={dimensions.width} height={dimensions.height}></Hist>
+        <p>The above graph shows the totals achieved at the given meet as a Histogram.<br></br>
+          The X-axis reflects the totals in kilograms that are in each bracket<br></br>
+          The Y-Axis reflects the percent of the competitors that fall into each bin<br></br>
+          The data labels are the number of competitors in each bin</p>
       </div>
     </div>
   );

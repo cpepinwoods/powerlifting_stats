@@ -40,7 +40,7 @@ function Hist({freq, vals, id, width, height}) {
     const ticks = d3.range(0, Math.max(...vals) + step, step);
     console.log(vals);
     return (
-        <svg ref={id} width="100%" height="100%">
+        <svg ref={id} width="100%" height="100%" margin="10px">
             {graph}
             <Axis x={0} y={height-25} scale={xScale} ticks={ticks} dir={"x"}></Axis>
             <Axis x={x_offset} y={0} scale={yScale} ticks={10} dir={"y"}></Axis>
