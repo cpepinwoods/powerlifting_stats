@@ -25,7 +25,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/stats_return", async function(req, res, next) {
-    res.send(await callPython('public/python/stats.py', [req.query.meet]));
+    res.send(await callPython('public/python/stats.py', [req.query.meet, req.query.gender, req.query.lift, req.query.equipment]));
 });
 
 router.get("/get_meets", function(req, res, next) {

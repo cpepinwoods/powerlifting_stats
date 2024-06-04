@@ -36,9 +36,10 @@ function Hist({freq, vals, id, width, height}) {
     const sum = freq.reduce((a, b) => a + b, 0);
     const xScale = d3.scaleLinear().domain([0, Math.max(...vals)]).range([x_offset, x_offset + graph_width]);
     const yScale = d3.scaleLinear().domain([0, max/sum*100]).range([graph_height + y_offset, y_offset]);
-    const step = Math.max(...vals)/50;
-    const ticks = d3.range(0, Math.max(...vals) + step, step);
-    console.log(vals);
+    const maxLift = Math.max(...vals);
+    const step = maxLift/50;
+    const end = Math.ceil(maxLift/step) + 1;
+    const ticks = d3.range(0, end * step, step);
     return (
         <svg ref={id} width="100%" height="100%" margin="10px">
             {graph}
