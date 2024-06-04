@@ -1,6 +1,8 @@
 import './App.css';
 import React, { useEffect, useState, useRef } from 'react';
 import Hist from './components/Hist.js';
+const loc = window.location;
+const URL = `${loc.protocol}//${loc.hostname}${loc.hostname === "localhost" ? ":9000" : ""}`;
 
 function App() {  
   const [freq, setFreq] = useState([0]);
@@ -15,7 +17,7 @@ function App() {
 
   const getNewMeet = async () => {
     const meet = document.getElementById("meet").value;
-    await fetch("http://localhost:9000/stats/get_new_meet?meet=" + meet)
+    await fetch(URL + "/stats/get_new_meet?meet=" + meet)
       .then(res => res.text())
       .then(res => alert(res))
       .then(() => getMeets());
@@ -24,7 +26,7 @@ function App() {
   // Gets the stats of the specified meet on button click
   const getMeetStats = async (meet, gender, lift, equipment) => {
     setRecent(meet);
-    await fetch("http://localhost:9000/stats/stats_return?meet=" + meet + "&gender=" + gender + "&lift=" + lift + "&equipment=" + equipment)
+    await fetch(URL + "/stats/stats_return?meet=" + meet + "&gender=" + gender + "&lift=" + lift + "&equipment=" + equipment)
       .then(res => res.json())
       .then(res => {
         setFreq(res.freq);
@@ -32,7 +34,7 @@ function App() {
   }
 
   const getMeets = async () => {
-    await fetch("http://localhost:9000/stats/get_meets")
+    await fetch(URL + "/stats/get_meets")
       .then(res => {
         return res.json()
       })
